@@ -15,7 +15,7 @@ pipeline {
         stage('Build docker image') { 
         agent { label 'main' }        
             steps {
-                      sh "/usr/bin/docker build -t ${registry}:${env.BUILD_ID} --no-cache ."
+                      sh "/usr/bin/docker build -t ${registry}:${env.BUILD_ID} ."
             }
         }
         stage('Deploy image to hub.docker') {
