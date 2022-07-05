@@ -38,10 +38,10 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'GitHUB', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                     script {
-                    if (fileExists('/var/lib/jenkins/content/Chart.yaml')) {
-                        sh 'git -C /var/lib/jenkins/content/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
+                    if (fileExists('/var/lib/jenkins/helmchart/Chart.yaml')) {
+                        sh 'git -C /var/lib/jenkins/helmchart/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/helmchart.git'
                         } else {
-                        sh 'git -C /var/lib/jenkins/ clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
+                        sh 'git -C /var/lib/jenkins/ clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/helmchart.git'
                         }
                     }
                     
