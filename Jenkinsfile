@@ -45,7 +45,7 @@ pipeline {
                         }
                     }
                     sh "sed -i -e '/appVersion/s/[0-9]\\+/$BUILD_NUMBER/' /var/lib/jenkins/helmchart/Chart.yaml"
-                    sh "sed -i -e '/tag/s/[0-9]\\+/$BUILD_NUMBER/' /var/lib/jenkins/helmchart/values.yaml.yaml"
+                    sh "sed -i -e '/tag/s/[0-9]\\+/$BUILD_NUMBER/' /var/lib/jenkins/helmchart/values.yaml"
                     sh 'git -C /var/lib/jenkins/helmchart/ add .'
                     sh 'git -C /var/lib/jenkins/helmchart/ commit -m "Revision $BUILD_NUMBER" '
                     sh 'git -C /var/lib/jenkins/helmchart/ push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/helmchart.git'
