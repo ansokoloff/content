@@ -53,6 +53,7 @@ pipeline {
                     // sh 'git -C /var/lib/jenkins/value/ push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
                                 
                 } 
+            }    
         }
     //       stage ('Receive helm chart') {
     //         agent { label 'kuber' } 
