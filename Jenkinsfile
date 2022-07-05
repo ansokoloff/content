@@ -36,12 +36,12 @@ pipeline {
       stage ('Push value for Helm') {
         agent { label 'main' } 
             steps {
-                // withCredentials([usernamePassword(credentialsId: 'GitHUB', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: 'GitHUB', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                     script {
                     if (fileExists('/var/lib/jenkins/content/Chart.yaml')) {
-                           echo 'File exist'
+                        sh 'git -C /var/lib/jenkins/content/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
                         } else {
-                        sh "echo 'Hello from ${env.BRANCH_NAME} branch!'"
+                        sh 'git -C /var/lib/jenkins/content/ clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
                         }
                     }
                     
