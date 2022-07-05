@@ -38,7 +38,7 @@ pipeline {
             steps {
                 // withCredentials([usernamePassword(credentialsId: 'GitHUB', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                     script {
-                    if (fileExists('/var/lib/jenkins/content/Chart.yaml') {
+                    if (fileExists('/var/lib/jenkins/content/Chart.yaml')) {
                            echo 'File exist'
                         } else {
                         sh "echo 'Hello from ${env.BRANCH_NAME} branch!'"
