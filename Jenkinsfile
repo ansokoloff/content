@@ -72,7 +72,7 @@ pipeline {
         stage ('Deploy to prod') {
             agent { label 'kuber' }
             steps {
-                sh 'helm install final /var/lib/jenkins/helmchart '
+                sh 'helm upgrade --install final /var/lib/jenkins/helmchart '
             }
         }        
  
