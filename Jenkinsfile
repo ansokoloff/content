@@ -44,7 +44,7 @@ pipeline {
                         sh 'git -C /var/lib/jenkins/ clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/helmchart.git'
                         }
                     }
-                    sh "sed -i -e '/appVersion/s/[0-9]\+/$BUILD_NUMBER/' /var/lib/jenkins/helmchart/Chart.yaml"
+                    sh "sed -i -e '/appVersion/s/[0-9]\\+/$BUILD_NUMBER/' /var/lib/jenkins/helmchart/Chart.yaml"
                     // sh '[ -d "/var/lib/jenkins/content/" ] && echo "Directory /path/to/dir exists."'
                     // sh 'git -C /var/lib/jenkins/content/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
                     // sh 'sed -i \'s/appVersion: "4"/appVersion: "$BUILD_NUMBER"/\' /var/lib/jenkins/content/Chart.yaml'
