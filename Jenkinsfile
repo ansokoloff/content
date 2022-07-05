@@ -41,7 +41,7 @@ pipeline {
                     if (fileExists('/var/lib/jenkins/content/Chart.yaml')) {
                         sh 'git -C /var/lib/jenkins/content/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
                         } else {
-                        sh 'git -C /var/lib/jenkins/content/ clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
+                        sh 'git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
                         }
                     }
                     
