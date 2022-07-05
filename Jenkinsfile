@@ -37,13 +37,21 @@ pipeline {
         agent { label 'main' } 
             steps {
                 // withCredentials([usernamePassword(credentialsId: 'GitHUB', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    script {
-                    if (fileExists('/var/lib/jenkins/content/Chart.yaml')) {
-                           echo 'File exist'
-                        } else {
-                        sh "echo 'Hello from ${env.BRANCH_NAME} branch!'"
+                    // script {
+                    // if (fileExists('/var/lib/jenkins/content/Chart.yaml')) {
+                    //        echo 'File exist'
+                    //     } else {
+                    //     sh "echo 'Hello from ${env.BRANCH_NAME} branch!'"
+                    //     }
+                    // }
+                    
+                script {
+                    if (1 == 1) {
+                        sh "echo 1"
+                    } else {
+                        sh "echo 2"
                     }
-                    }
+                }
                     // sh '[ -d "/var/lib/jenkins/content/" ] && echo "Directory /path/to/dir exists."'
                     // sh 'git -C /var/lib/jenkins/content/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
                     // sh 'sed -i \'s/appVersion: "4"/appVersion: "$BUILD_NUMBER"/\' /var/lib/jenkins/content/Chart.yaml'
