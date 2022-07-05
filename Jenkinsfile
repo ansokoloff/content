@@ -45,12 +45,10 @@ pipeline {
                         }
                     }
                     sh "sed -i -e '/appVersion/s/[0-9]\\+/$BUILD_NUMBER/' /var/lib/jenkins/helmchart/Chart.yaml"
-                    // sh '[ -d "/var/lib/jenkins/content/" ] && echo "Directory /path/to/dir exists."'
-                    // sh 'git -C /var/lib/jenkins/content/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
-                    // sh 'sed -i \'s/appVersion: "4"/appVersion: "$BUILD_NUMBER"/\' /var/lib/jenkins/content/Chart.yaml'
-                    // sh 'git -C /var/lib/jenkins/value/ add .'
-                    // sh 'git -C /var/lib/jenkins/value/ commit -m "Revision $BUILD_NUMBER" '
-                    // sh 'git -C /var/lib/jenkins/value/ push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
+                    sh "sed -i -e '/tag/s/[0-9]\\+/$BUILD_NUMBER/' /var/lib/jenkins/helmchart/values.yaml.yaml"
+                    sh 'git -C /var/lib/jenkins/helmchart/ add .'
+                    sh 'git -C /var/lib/jenkins/helmchart/ commit -m "Revision $BUILD_NUMBER" '
+                    sh 'git -C /var/lib/jenkins/helmchart/ push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/helmchart.git'
                                 
                 } 
             }    
