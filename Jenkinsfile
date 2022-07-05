@@ -6,27 +6,27 @@ pipeline {
     dockerImage = ''
     } 
   stages {
-        // stage('Clone repo') { 
-        // agent { label 'main' }  
-        //     steps {
-        //         git branch: 'main', credentialsId: 'GitHUB', url: 'https://github.com/ansokoloff/content.git'            
-        //   }
-        // }
-        // stage('Build docker image') { 
-        // agent { label 'main' }        
-        //     steps {
-        //               sh "/usr/bin/docker build -t ${registry}:${env.BUILD_ID} ."
-        //     }
-        // }
-        // stage('Deploy image to hub.docker') {
-        // agent { label 'main' }  
-        //     steps{
-        //               sh 'echo $registryCredential_PSW | docker login -u $registryCredential_USR --password-stdin'
-        //               sh 'docker push $registry:$BUILD_NUMBER'
-        //               sh 'docker tag $registry:$BUILD_NUMBER $registry:latest'
-        //               sh 'docker push $registry'
-        //         }
-        // }
+        stage('Clone repo') { 
+        agent { label 'main' }  
+            steps {
+                git branch: 'main', credentialsId: 'GitHUB', url: 'https://github.com/ansokoloff/content.git'            
+          }
+        }
+        stage('Build docker image') { 
+        agent { label 'main' }        
+            steps {
+                      sh "/usr/bin/docker build -t ${registry}:${env.BUILD_ID} ."
+            }
+        }
+        stage('Deploy image to hub.docker') {
+        agent { label 'main' }  
+            steps{
+                      sh 'echo $registryCredential_PSW | docker login -u $registryCredential_USR --password-stdin'
+                      sh 'docker push $registry:$BUILD_NUMBER'
+                      sh 'docker tag $registry:$BUILD_NUMBER $registry:latest'
+                      sh 'docker push $registry'
+                }
+        }
         // stage('Cleaning up') {
         // agent { label 'main' }  
         //     steps{
@@ -53,31 +53,28 @@ pipeline {
                 } 
             }    
         }
-    //       stage ('Receive helm chart') {
-    //         agent { label 'kuber' } 
-    //         steps {
-    //             sh "uname -a"
-    //             withCredentials([usernamePassword(credentialsId: 'Github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-    //             sh 'git -C /var/lib/jenkins/value/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/value.git'                
-    //         } 
-    //       }
-    //     }
+          stage ('Receive helm chart') {
+            agent { label 'kuber' } 
+            steps {
+                sh "uname -a"
+                withCredentials([usernamePassword(credentialsId: 'Github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    script {
+                    if (fileExists('/var/lib/jenkins/helmchart/Chart.yaml')) {
+                        sh 'git -C /var/lib/jenkins/helmchart/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/helmchart.git'
+                        } else {
+                        sh 'git -C /var/lib/jenkins/ clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/helmchart.git'
+                        }
+                    }
+            } 
+          }
+        }
           
-    //       stage ('Receive data of artifact') {
-    //         agent { label 'kuber' } 
-    //         steps {
-    //             sh "uname -a"
-    //             withCredentials([usernamePassword(credentialsId: 'Github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-    //             sh 'git -C /var/lib/jenkins/value/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/value.git'                
-    //         } 
-    //       }
-    //     }
-    //     stage ('Deploy to prod') {
-    //         agent { label 'kuber' }
-    //         steps {
-    //             sh 'helm upgrade --install epam /var/lib/jenkins/epam --values /var/lib/jenkins/value/value.yaml '
-    //         }
-    //     }        
+        stage ('Deploy to prod') {
+            agent { label 'kuber' }
+            steps {
+                sh 'helm upgrade --install probe /var/lib/jenkins/helmchart '
+            }
+        }        
  
     }
 }
