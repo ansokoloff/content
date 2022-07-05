@@ -61,7 +61,6 @@ pipeline {
                                 
                 } 
         }
-      } 
     //       stage ('Receive helm chart') {
     //         agent { label 'kuber' } 
     //         steps {
