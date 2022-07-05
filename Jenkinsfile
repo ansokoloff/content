@@ -37,12 +37,7 @@ pipeline {
         agent { label 'kuber' } 
             steps {
                 withCredentials([usernamePassword(credentialsId: 'GitHUB', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    sh 'if [ -d "/var/lib/jenkins/content" ]; then
-                        echo "Installing config files in ${DIR}..."
-                        else
-                        echo "Error: ${DIR} not found. Can not continue."
-                        exit 1
-                       fi'
+                    sh '[ -d "/var/lib/jenkins/content/" ] && echo "Directory /path/to/dir exists."'
                     // sh 'git -C /var/lib/jenkins/content/ pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ansokoloff/content.git'
                     // sh 'sed -i \'s/appVersion: "4"/appVersion: "$BUILD_NUMBER"/\' /var/lib/jenkins/content/Chart.yaml'
                     // sh 'git -C /var/lib/jenkins/value/ add .'
