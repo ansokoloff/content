@@ -23,8 +23,8 @@ pipeline {
             steps{
                       sh 'echo $registryCredential_PSW | docker login -u $registryCredential_USR --password-stdin'
                       sh 'docker push $registry:$BUILD_NUMBER'
-                      sh 'docker tag $registry:$BUILD_NUMBER $registry:latest'
-                      sh 'docker push $registry'
+                    //   sh 'docker tag $registry:$BUILD_NUMBER $registry:latest'
+                    //   sh 'docker push $registry'
                 }
         }
         // stage('Cleaning up') {
